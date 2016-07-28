@@ -1,0 +1,1 @@
+This is a movie app designed to display multiple thumbnails of popular movies, separated by genre, that have clickable links embedded.
