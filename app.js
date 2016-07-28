@@ -1,27 +1,19 @@
 
 
-function getVideos(link,data) {
-	var link = 'https://www.tastekid.com/api/similar?q=';
+(function getVideos(){
+	var link = "https://www.tastekid.com/api/similar?callback=?";
 	var params = {
-		k: '233921-MoviesAp-KQ644TIG',		
-		type:,
-		q:
-	}
+		type: 'movie',
+		k: '233921-Movieapp-160TW6HV',
+		q: "The Shining"		
+	};
 
-		$.getJSON(link), 
-			{
+	$.getJSON(link,params, function (data) {
+		console.log(data);
 
-			part: "snippet",
-			maxResults: 6,
-			key: apiKey,
-			
-	
-	}
-			, 
-			function (data) {
-				display(data.items);
-				displaySearchResults(data.items);
-			}
 
-		);
-	}
+	})
+
+})();
+
+
