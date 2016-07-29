@@ -1,37 +1,64 @@
-$('#search-term').submit(function(e) {
-	e.preventDefault();
-	var userInput = $('#user-input').val();
-	getVideos(userInput);
-});
 
-function getVideos(searchedFilm){
-	var link = "https://www.tastekid.com/api/similar?callback=?";
-	var params = {
+function getVideos(movieType){
+	var link = "https://api.themoviedb.org/3/movie/"+movieType+"?api_key=0621fea9c06f69e2792e9f85596f52c8";
+  var params = {
 		type: 'movie',
-		k: '233921-Movieapp-160TW6HV',
-		q: searchedFilm		
 	};
 	$.getJSON(link,params, function (data) {
-		console.log(data);
-		showResults(data.Similar.Results)
+		console.log(data.results);
+		showPoster(data.results);
 
 	})
 };
 
 
-  function showResults(movies){
+  function showPoster(movies){
     
     var thumbnail = "";
-    console.log(movies);
-   
-    	for (var i = 0; i < movies.length; i++){
-    		var listNames = movies[i].Name;
-    		thumbnail += '<li>' + listNames + '</li>';
-    	}
+    var movieInfos = "";
+    var url = 'https://image.tmdb.org/t/p/w300_and_h450_bestv2/';
 
+    console.log(movies.length);
+    	for (var i = 0; i < movies.length; i++){
+
+    		var moviePoster = movies[i].poster_path;
+        var title = movies[i].title;
+        var overview = movies[i].overview;
+        var popularity = Math.floor(movies[i].popularity);
+        var stars = movies[i].vote_average;
+        thumbnail +="<div><img src="+ url + moviePoster + "><section id='infos'><h2>"+ title +"</h2>"
+        						+"<p>"+ overview + "</p>" + "<ul>" + "<li>" + 'Popularity Rating: '+ popularity + "</li>"
+        							+"<li>"+ 'Stars: '+ stars + "</li>" + "</ul></section></div>" ;
+        
+   };
+ 	
     $('#results').html(thumbnail);
-    $('#results').append(thumbnail);
+		   
+    $('#results').on('mouseenter','img', function(e) {
+    	e.preventDefault();
+    	$(this).siblings('#infos').show();
+    })
+     $('#results').on('mouseleave','img', function(e) {
+    	e.preventDefault();
+    	$(this).siblings('#infos').hide();
+    })
+
   };
 
+
+
+getVideos('popular');
+
+$('#top-rated').click(function() {
+	getVideos('top_rated');
+});
+
+$('#upcoming').click(function() {
+	getVideos('upcoming');
+});
+
+$('#popular').click(function() {
+	getVideos('popular');
+});
 
 
