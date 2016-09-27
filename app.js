@@ -34,7 +34,7 @@ function buildListItem(options) {
         ids = ids.results;
         if (ids.length){
             // window.open('https://www.youtube.com/watch?v='+ids[0].key, "_blank");
-            movieList.html('<div class="videos"><iframe width="500" height="500" align="middle" src="https://www.youtube.com/embed/'+ ids[0].key +'"></iframe></div>');
+            movieList.html('<div class="videos"><iframe width="800" height="500" align="middle" src="https://www.youtube.com/embed/'+ ids[0].key +'?rel=0" allowfullscreen></iframe></div>');
 
         }
     });
